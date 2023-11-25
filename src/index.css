@@ -13,3 +13,7 @@ code {
     monospace;
 }
 */
+
+.accordian-button::after{
+  filter: invert(1);
+}

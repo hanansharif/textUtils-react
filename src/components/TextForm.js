@@ -71,7 +71,7 @@ export default function TextForm(props) {
     const handlePasteFromClipboard = async () => {
         try {
             const copiedText = await navigator.clipboard.readText();
-            setText(copiedText);
+            setText(Text + copiedText);
             console.log('Text pasted from clipboard');
         } catch (err) {
             console.error('Unable to paste text from clipboard', err);
@@ -89,21 +89,21 @@ export default function TextForm(props) {
         {/* <label htmlFor="myBox" className="form-label">Example textarea</label> */}
         <textarea className="form-control" value={Text} id="myBox" rows="8" onChange={handleOnChange} style={{backgroundColor: props.mode === 'dark' ? 'gray': 'white', color: props.mode === 'dark' ? 'white': 'black'}} autoFocus></textarea>
         </div>
-        <button className="btn btn-primary m-1" onClick={handleUpClick}>Convert to Upper Case</button>
-        <button className="btn btn-primary m-1" onClick={handleLoClick}>Convert to Lower Case</button>
-        <button className="btn btn-primary m-1" onClick={handleSentence}>Convert to Sentence Case</button>
-        <button className="btn btn-primary m-1" onClick={handleTitle}>Convert to Title Case</button><br />
-        <button className="btn btn-primary m-1" onClick={handleSpc}>Remove Extra Spaces</button>
-        <button className="btn btn-primary m-1" onClick={handleClear}>Clear Text</button>
-        <button className="btn btn-primary m-1" onClick={handleCopyToClipboard}>Copy Text</button>
+        <button disabled={Text.length===0} className="btn btn-primary m-1" onClick={handleUpClick}>Convert to Upper Case</button>
+        <button disabled={Text.length===0} className="btn btn-primary m-1" onClick={handleLoClick}>Convert to Lower Case</button>
+        <button disabled={Text.length===0} className="btn btn-primary m-1" onClick={handleSentence}>Convert to Sentence Case</button>
+        <button disabled={Text.length===0} className="btn btn-primary m-1" onClick={handleTitle}>Convert to Title Case</button><br />
+        <button disabled={Text.length===0} className="btn btn-primary m-1" onClick={handleSpc}>Remove Extra Spaces</button>
+        <button disabled={Text.length===0} className="btn btn-primary m-1" onClick={handleClear}>Clear Text</button>
+        <button disabled={Text.length===0} className="btn btn-primary m-1" onClick={handleCopyToClipboard}>Copy Text</button>
         <button className="btn btn-primary m-1" onClick={handlePasteFromClipboard}>Paste Text</button>
     </div>
     <div className="container my-5"  style={{color: props.mode === 'dark' ? 'white': 'black'}}>
         <h1>Your Text Summary</h1>
-        <p>{Text.split(" ").length} words and {Text.length} characters</p>
-        <p>{0.008 * Text.split(" ").length} Minutes to Read</p>
+        <p>{Text.split(/\s+/).filter((element)=>{return element.length!==0}).length} words and {Text.length} characters</p>
+        <p>{0.008 * Text.split(" ").filter((element)=>{return element.length!==0}).length} Minutes to Read</p>
         <h3>Preview</h3>
-        <p>{Text.length>0?Text:"Enter something in the textbox above to preview here."}</p>
+        <p>{Text.length>0?Text:"Nothing to preview"}</p>
     </div>
     </>
   )
